@@ -11,6 +11,7 @@
         <module>hello-application-context</module>
         <module>spring-framework-exercises-model</module>
         <module>spring-framework-exercises-util</module>
+        <module>hello-spring-mvc</module>
     </modules>
     <packaging>pom</packaging>
 
