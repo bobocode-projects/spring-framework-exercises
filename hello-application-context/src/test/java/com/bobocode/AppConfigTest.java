@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.lang.annotation.Annotation;
@@ -26,7 +25,6 @@ import static org.hamcrest.Matchers.*;
 
 
 @SpringJUnitConfig
-@ContextConfiguration
 public class AppConfigTest {
     @Configuration
     @ComponentScan(basePackages = "com.bobocode")
