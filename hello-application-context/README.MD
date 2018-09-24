@@ -9,7 +9,7 @@ To verify your configuration, run `AppConfigTest.java`
 
  
 ### Pre-conditions :heavy_exclamation_mark:
-You're supposed to be familiar with *JPA* mapping strategies and *Hibernate ORM*
+You're supposed to be familiar with *Spring IoC* and *Dependency injection*
 
 ### How to start :question:
 * Just clone the repository and start implementing the **todo** section, verify your changes by running tests
