@@ -12,3 +12,4 @@ It is important to have a different type of activities, which purpose is improvi
 ##
 * [Hello *ApplicationContext*](https://github.com/boy4uck/spring-framework-exercises/tree/master/hello-application-context#hello-applicationcontext-exercise-muscle)
 * [Hello *Spring MVC*](https://github.com/boy4uck/spring-framework-exercises/tree/master/hello-spring-mvc#hello-spring-mvc-exercise-muscle)
+* [Account *JSP*](https://github.com/bobocode-projects/spring-framework-exercises/tree/master/account-jsp)
