@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hello-spring-mvc</artifactId>
+    <artifactId>account-jsp</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -23,6 +23,11 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.bobocode</groupId>
+            <artifactId>spring-framework-exercises-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -40,4 +45,5 @@
 
         </plugins>
     </build>
+
 </project>
