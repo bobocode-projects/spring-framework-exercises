@@ -1,6 +1,13 @@
 package com.bobocode.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.persistence.EntityManagerFactory;
 
 /**
  * This class provides root application configuration. It scans for all available beans and enables declarative
@@ -11,6 +18,14 @@ import org.springframework.transaction.PlatformTransactionManager;
  * todo: 3. Configure JPA {@link PlatformTransactionManager} with bean name "transactionManager"
  * todo: 4. Enable declarative transaction management
  */
+@Configuration
+@ComponentScan("com.bobocode")
+@EnableTransactionManagement
 public class RootConfig {
 
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
 }
+

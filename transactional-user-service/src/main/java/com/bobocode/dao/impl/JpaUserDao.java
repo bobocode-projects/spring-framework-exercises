@@ -16,7 +16,10 @@ import java.util.List;
  * todo: 2. Enable transaction management on class level
  * todo: 3. Inject persistence context into {@link EntityManager} field
  */
+@Transactional
+@Repository("userDao")
 public class JpaUserDao implements UserDao {
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
@@ -34,3 +37,4 @@ public class JpaUserDao implements UserDao {
         entityManager.persist(user);
     }
 }
+
