@@ -3,8 +3,8 @@ package com.bobocode;
 import com.bobocode.config.RootConfig;
 import com.bobocode.config.WebConfig;
 import com.bobocode.dao.impl.InMemoryAccountDao;
+import com.bobocode.model.Account;
 import com.bobocode.web.controller.AccountRestController;
-import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,28 +81,32 @@ public class AccountRestControllerTest {
 
     @Test
     public void testGetAllAccounts() throws Exception {
-        mockMvc.perform(post("/accounts").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"Johnny\", \"lastName\":\"Boy\", \"email\":\"jboy@gmail.com\"}"));
-        mockMvc.perform(post("/accounts").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"Okko\", \"lastName\":\"Bay\", \"email\":\"obay@gmail.com\"}"));
+        Account account1 = create("Johnny", "Boy", "jboy@gmail.com");
+        Account account2 = create("Okko", "Bay", "obay@gmail.com");
+        accountDao.save(account1);
+        accountDao.save(account2);
 
         mockMvc.perform(get("/accounts"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*].email").value(hasItems("jboy@gmail.com", "obay@gmail.com")));
     }
 
+    private Account create(String firstName, String lastName, String email){
+        Account account = new Account();
+        account.setFirstName(firstName);
+        account.setLastName(lastName);
+        account.setEmail(email);
+        return account;
+    }
+
     @Test
     public void testGetById() throws Exception {
-        String responseString = mockMvc.perform(post("/accounts").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"Johnny\", \"lastName\":\"Boy\", \"email\":\"jboy@gmail.com\"}"))
-                .andReturn().getResponse().getContentAsString();
+        Account account = create("Johnny", "Boy", "jboy@gmail.com");
+        accountDao.save(account);
 
-        int id = JsonPath.parse(responseString).read("$.id");
-
-
-        mockMvc.perform(get(String.format("/accounts/%d", id)))
+        mockMvc.perform(get(String.format("/accounts/%d", account.getId())))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.id").value(account.getId()))
                 .andExpect(jsonPath("$.email").value("jboy@gmail.com"))
                 .andExpect(jsonPath("$.firstName").value("Johnny"))
                 .andExpect(jsonPath("$.lastName").value("Boy"));
@@ -110,24 +114,20 @@ public class AccountRestControllerTest {
 
     @Test
     public void testRemoveAccount() throws Exception {
-        String responseString = mockMvc.perform(post("/accounts").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"Johnny\", \"lastName\":\"Boy\", \"email\":\"jboy@gmail.com\"}"))
-                .andReturn().getResponse().getContentAsString();
-        int id = JsonPath.parse(responseString).read("$.id");
+        Account account = create("Johnny", "Boy", "jboy@gmail.com");
+        accountDao.save(account);
 
-        mockMvc.perform(delete(String.format("/accounts/%d", id)))
+        mockMvc.perform(delete(String.format("/accounts/%d", account.getId())))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testUpdateAccount() throws Exception {
-        String responseString = mockMvc.perform(post("/accounts").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"firstName\":\"Johnny\", \"lastName\":\"Boy\", \"email\":\"jboy@gmail.com\"}"))
-                .andReturn().getResponse().getContentAsString();
-        int id = JsonPath.parse(responseString).read("$.id");
+        Account account = create("Johnny", "Boy", "jboy@gmail.com");
+        accountDao.save(account);
 
-        mockMvc.perform(put(String.format("/accounts/%d", id)).contentType(MediaType.APPLICATION_JSON)
-                .content(String.format("{\"id\":\"%d\", \"firstName\":\"Johnny\", \"lastName\":\"Boy\", \"email\":\"johnny.boy@gmail.com\"}", id)))
+        mockMvc.perform(put(String.format("/accounts/%d", account.getId())).contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"id\":\"%d\", \"firstName\":\"Johnny\", \"lastName\":\"Boy\", \"email\":\"johnny.boy@gmail.com\"}", account.getId())))
                 .andExpect(status().isNoContent());
     }
 
