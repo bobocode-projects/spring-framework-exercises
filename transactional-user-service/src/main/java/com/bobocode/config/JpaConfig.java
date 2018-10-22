@@ -25,7 +25,6 @@ public class JpaConfig {
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
-                .setName("bobocodeDB")
                 .build();
     }
 
@@ -41,7 +40,6 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setJpaVendorAdapter(jpaVendorAdapter);
-        emf.setPersistenceUnitName("springEntities");
         // todo: 6. Configure package "com.bobocode.model" to scan for JPA entities
         return emf;
     }
