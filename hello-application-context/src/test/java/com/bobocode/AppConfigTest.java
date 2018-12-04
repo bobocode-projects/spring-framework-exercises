@@ -57,8 +57,11 @@ public class AppConfigTest {
     @Test
     public void testComponentScanPackagesAreSpecified() {
         ComponentScan componentScan = AppConfig.class.getAnnotation(ComponentScan.class);
-
-        assertThat(componentScan.basePackages(), arrayContainingInAnyOrder("com.bobocode.dao", "com.bobocode.service"));
+        String[] packages = componentScan.basePackages();
+        if (packages.length == 0) {
+            packages = componentScan.value();
+        }
+        assertThat(packages, arrayContainingInAnyOrder("com.bobocode.dao", "com.bobocode.service"));
     }
 
     @Test
