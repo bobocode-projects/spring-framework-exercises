@@ -59,8 +59,12 @@ public class WelcomeWebAppTest {
     @Test
     public void testRootConfigComponentScanPackages() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
+        String[] packages = componentScan.basePackages();
+        if (packages.length == 0) {
+            packages = componentScan.value();
+        }
 
-        assertThat(componentScan.basePackages(), arrayContaining("com.bobocode"));
+        assertThat(packages, arrayContaining("com.bobocode"));
     }
 
     @Test
