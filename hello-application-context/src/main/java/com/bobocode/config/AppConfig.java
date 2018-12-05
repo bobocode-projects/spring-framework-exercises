@@ -1,6 +1,9 @@
 package com.bobocode.config;
 
 import com.bobocode.TestDataGenerator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * This class application context configuration.
@@ -10,6 +13,11 @@ import com.bobocode.TestDataGenerator;
  * todo: provide explicit configuration for a bean of type {@link TestDataGenerator} with name "dataGenerator" in this class.
  * todo: Don't specify bean name "dataGenerator" explicitly
  */
+@Configuration
+@ComponentScan(basePackages = {"com.bobocode.dao", "com.bobocode.service"})
 public class AppConfig {
-
+    @Bean
+    public TestDataGenerator dataGenerator() {
+        return new TestDataGenerator();
+    }
 }
