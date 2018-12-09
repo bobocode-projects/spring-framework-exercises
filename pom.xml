@@ -15,6 +15,7 @@
         <module>account-jsp</module>
         <module>account-rest-api</module>
         <module>transactional-user-service</module>
+        <module>product-mvc</module>
     </modules>
     <packaging>pom</packaging>
 
