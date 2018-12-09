@@ -1,0 +1,39 @@
+Product MVC app
+
+Create new maven project with all required dependencies, plugins and configs
+
+Create a Product model with the following fields
+-   id
+-   name
+-   price
+
+Create a ProductService backed by HashMap. Implement the following methods
+-   save - receives a new Product, assigns an id to it and stores it in the map by id
+-   getById -  receives an id, and returns a Product found in map by id
+
+Configure Spring MVC application, including servlet initializer, view resolver and other required beans
+
+Create ProductController that has the following methods:
+-   getProduct - handles GET request to “/products” with id parameters,
+    uses ProductService to find a Product and passes it to the view account.jsp
+-   getProductForm - handles GET request to “/products/add” and forwards it to the productForm.jsp
+-   saveProduct - handles POST request to “/products” that contains form parameters,
+    receives a Product created from form parameters and stores new product using ProductService
+
+Create JSP pages
+-   product.jsp
+-   productForm.jsp
+
+* Implement additional functionality that allows to see the whole list of existing products
+(one more jsp view, one more controller method, one more service method)
+
+** Implement navigation between pages.
+E.g. page that show one account should contain a button(or link) that allows to see all products,
+and another button that allows to add new product.
+A page that shows the list should provide some navigation to each product.
+E.g. a product name can be clickable. When you click on product name it goes to its page (using get by id).
+A product form should have two buttons. E.g. “Save” and “See all”
+
+*** Implement validation and notification.
+When new product is stored, a message “Product has been stored successfully” should be printed below the button “Save”.
+If the product with a current name already exists, an error message should be displayed

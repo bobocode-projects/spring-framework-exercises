@@ -10,14 +10,37 @@
 <head>
     <title>Error</title>
     <style>
+        h1, h2, h3, h4 {
+            font-family: "Helvetica", helvetica;
+            color: darkslategrey;
+        }
+
         body {
+            background-color: gainsboro;
             font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
         }
 
-        h1, h2, h3 {
-            font-family: 'DejaVu Sans Mono', monospace;
+        table, tr {
+            background-color: darkseagreen;
+            border: 2px solid grey;
+            border-collapse: collapse;
+            text-align: left;
+            vertical-align: center;
         }
-        button {
+
+        td, th {
+            text-align: left;
+            vertical-align: center;
+            padding: 15px;
+            font-family: Helvetica;
+        }
+
+        tr:hover {
+            cursor: crosshair;
+            background-color: lightsteelblue;
+        }
+
+        a, button {
             font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
         }
     </style>

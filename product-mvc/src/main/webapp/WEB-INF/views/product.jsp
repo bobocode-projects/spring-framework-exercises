@@ -10,30 +10,53 @@
 <head>
     <title>Single product page</title>
     <style>
-        .beauty {
-            color: green;
-            margin-left: 50px;
-            border-left: 10px;
+        h1 {
+            font-family: "Helvetica", helvetica;
+            color: darkslategrey;
         }
-        .display-4 {
-            color: brown;
+
+        body {
+            background-color: gainsboro;
+            font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
         }
-        .prettyButton {
-            color: lawngreen;
+
+        table, tr {
+            background-color: darkseagreen;
+            border: 2px solid grey;
+            border-collapse: collapse;
+            text-align: left;
+            vertical-align: center;
+        }
+
+        td, th {
+            text-align: left;
+            vertical-align: center;
+            padding: 15px;
+            font-family: Helvetica;
+        }
+
+        tr:hover {
+            cursor: crosshair;
+            background-color: lightsteelblue;
+        }
+
+        a, button {
+            font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
         }
     </style>
 </head>
 <body>
-<div class="beauty">
-    <h1 class="display-4" align="center">Product</h1>
+<div align="center">
+    <h1>Product</h1>
     <div>
     <p>ID: ${product.id}</p>
     <p>Name: ${product.name}</p>
     <p>Price: ${product.price}</p>
     </div>
+    <div>
     <a class = "prettyButton" href="/products/add" role="button">Add new product</a>
     <a class = "prettyButton" href="/products/list" role="button">List all products</a>
-
+    </div>
 </div>
 </body>
 </html>

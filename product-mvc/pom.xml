@@ -14,6 +14,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>5.0.7.RELEASE</version>
@@ -24,7 +29,12 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
- </dependencies>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
 
