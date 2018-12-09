@@ -1,15 +1,14 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: serhii
-  Date: 08.12.18
-  Time: 13:36
+  Date: 09.12.18
+  Time: 22:53
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add new product</title>
+    <title>Welcome to us...</title>
     <style>
         h1 {
             font-family: "Helvetica", helvetica;
@@ -49,23 +48,14 @@
         a, button {
             font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
         }
-
     </style>
 </head>
 <body>
 <div align="center">
-    <h1>Add new product:</h1></div>
-<form method="POST" name="product" action="/products">
-    <div align="center">
-        Name: <input id="productName" name="name" type="text" placeholder="Product name"/>
-        <br>
-        Price: <input id="productPrice" name="price" type="number" placeholder="Product price"/>
-        <br>
-        <input type=submit value="Save"/>
-    </div>
-    <div align="center">
-        <a href="/products/list" role="button">See all products</a>
-    </div>
-</form>
+    <h1>Add your first product:</h1>
+</div>
+<div align="center">
+    <a href="/products/add" role="button">Add product</a>
+</div>
 </body>
 </html>

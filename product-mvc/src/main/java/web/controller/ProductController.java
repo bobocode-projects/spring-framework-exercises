@@ -5,10 +5,13 @@ import exception.ProductMvcException;
 import model.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import service.ProductServiceInterface;
 import util.ProductGenerator;
+import validation.ProductValidator;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -27,8 +30,7 @@ public class ProductController {
             Product product = productService.getById(id);
             model.addAttribute("product", product);
             return "product";
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return "error";
         }
     }
@@ -46,12 +48,15 @@ public class ProductController {
     }
 
     @PostMapping
-    public String post(@ModelAttribute("product") Product product, Model model) {
-        productService.save(product);
-        model.addAttribute("id", product.getId());
-        model.addAttribute("name", product.getName());
-        model.addAttribute("price", product.getPrice());
-        return "add_product";
+    public String post(@ModelAttribute("product") Product product, Model model, BindingResult result) {
+        ProductValidator productValidator = new ProductValidator();
+        productValidator.validate(product, result);
+        if (result.hasErrors()) {
+            return "add_product";
+        } else {
+            productService.save(product);
+            return "add_product";
+        }
     }
 
 }
