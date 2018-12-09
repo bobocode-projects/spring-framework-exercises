@@ -17,10 +17,10 @@ public class ProductValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Product product = (Product) target;
         if(product.getName() == null || product.getName().length() <= 2) {
-            errors.rejectValue("name", "Name is null or length less than 2");
+            errors.rejectValue("name", "not.valid.name");
         }
         if(product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
-            errors.rejectValue("price", "Price can't be 0 or less");
+            errors.rejectValue("price", "not.valid.price");
         }
     }
 }

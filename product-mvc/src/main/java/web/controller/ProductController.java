@@ -43,12 +43,13 @@ public class ProductController {
     }
 
     @GetMapping("/add")
-    public String addNewProduct() {
+    public String addNewProduct(Model model) {
+        model.addAttribute("product", new Product());
         return "add_product";
     }
 
-    @PostMapping
-    public String post(@ModelAttribute("product") Product product, Model model, BindingResult result) {
+    @PostMapping("/add")
+    public String post(@ModelAttribute("product") Product product, BindingResult result) {
         ProductValidator productValidator = new ProductValidator();
         productValidator.validate(product, result);
         if (result.hasErrors()) {
