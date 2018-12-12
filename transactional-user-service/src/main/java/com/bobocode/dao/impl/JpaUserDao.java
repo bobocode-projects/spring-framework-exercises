@@ -1,13 +1,13 @@
 package com.bobocode.dao.impl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
 import com.bobocode.dao.UserDao;
 import com.bobocode.model.jpa.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
 
 /**
  * This class implements {@link UserDao} using JPA.
@@ -16,7 +16,10 @@ import java.util.List;
  * todo: 2. Enable transaction management on class level
  * todo: 3. Inject persistence context into {@link EntityManager} field
  */
+@Repository
+@Transactional
 public class JpaUserDao implements UserDao {
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override

@@ -1,13 +1,17 @@
 package com.bobocode.service;
 
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+
 import com.bobocode.dao.UserDao;
 import com.bobocode.model.jpa.Role;
 import com.bobocode.model.jpa.RoleType;
 import com.bobocode.model.jpa.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * This class proovides {@link User} related service logic.
@@ -18,17 +22,26 @@ import static java.util.stream.Collectors.toList;
  * todo: 4. Configure {@link UserService#getAll()} as read-only method
  * todo: 4. Configure {@link UserService#getAllAdmins()} as read-only method
  */
+@Service
+@Transactional
 public class UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public void save(User user) {
         userDao.save(user);
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAll() {
         return userDao.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAllAdmins() {
         return userDao.findAll().stream()
                 .filter(user -> user.getRoles().stream()
