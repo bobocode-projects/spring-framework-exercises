@@ -30,11 +30,7 @@ public class UserService {
     }
 
     public List<User> getAllAdmins() {
-        return userDao.findAll().stream()
-                .filter(user -> user.getRoles().stream()
-                        .map(Role::getRoleType)
-                        .anyMatch(roleType -> roleType.equals(RoleType.ADMIN)))
-                .collect(toList());
+        throw new UnsupportedOperationException("Don't be lazy and implement the method");
     }
 
     public void addRole(Long userId, RoleType roleType) {

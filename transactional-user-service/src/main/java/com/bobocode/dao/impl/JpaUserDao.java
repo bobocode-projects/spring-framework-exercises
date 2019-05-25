@@ -14,7 +14,7 @@ import java.util.List;
  * <p>
  * todo: 1. Configure {@link JpaUserDao} bean as Spring Repository with name "userDao"
  * todo: 2. Enable transaction management on class level
- * todo: 3. Inject persistence context into {@link EntityManager} field
+ * todo: 3. Inject {@link EntityManager} using @{@link PersistenceContext} annotation
  */
 public class JpaUserDao implements UserDao {
     private EntityManager entityManager;
