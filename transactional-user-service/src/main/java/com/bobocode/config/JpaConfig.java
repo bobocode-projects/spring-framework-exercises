@@ -45,7 +45,7 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setJpaVendorAdapter(jpaVendorAdapter);
-        // todo: 5. Configure package "com.bobocode.model" to scan for JPA entities
+        emf.setPackagesToScan("com.bobocode.model");
         return emf;
     }
 }

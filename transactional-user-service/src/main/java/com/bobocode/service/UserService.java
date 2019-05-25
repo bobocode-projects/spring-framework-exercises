@@ -41,7 +41,11 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<User> getAllAdmins() {
-        throw new UnsupportedOperationException("Don't be lazy and implement the method");
+        return userDao.findAll().stream()
+                .filter(user -> user.getRoles().stream()
+                        .map(Role::getRoleType)
+                        .anyMatch(roleType -> roleType.equals(RoleType.ADMIN)))
+                .collect(toList());
     }
 
     public void addRole(Long userId, RoleType roleType) {
