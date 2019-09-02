@@ -1,7 +1,7 @@
 # <img src="https://raw.githubusercontent.com/bobocode-projects/resources/master/image/logo_transparent_background.png" height=50/>Hello Spring MVC exercise :muscle:
 Improve your *Spring MVC* configuration skills
 ### Task
-The task is to **configure a typical *Spring MCV* application** separating web and root configs. Your job is to follow 
+The task is to **configure a typical *Spring MVC* application** separating web and root configs. Your job is to follow 
 the instructions in the *todo* section and **implement a proper configuration.**  
 
 To verify your configuration, run `WelcomeWebAppTest.java`
