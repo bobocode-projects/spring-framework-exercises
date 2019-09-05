@@ -21,58 +21,62 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @SpringJUnitConfig(classes = RootConfig.class)
-public class WebAppConfigTest {
+class WebAppConfigTest {
 
     @Autowired
     private ApplicationContext applicationContext;
 
     @Test
-    public void testDispatcherServletMapping() {
+    void testDispatcherServletMapping() {
         WebAppInitializerWrapper webAppInitializerWrapper = new WebAppInitializerWrapper();
 
         assertThat(webAppInitializerWrapper.getServletMappings(), arrayContaining("/"));
     }
 
     @Test
-    public void testInitializerRootConfigClasses() {
+    void testInitializerRootConfigClasses() {
         WebAppInitializerWrapper webAppInitializerWrapper = new WebAppInitializerWrapper();
 
         assertThat(webAppInitializerWrapper.getRootConfigClasses(), arrayContaining(RootConfig.class));
     }
 
     @Test
-    public void testInitializerWebConfigClasses() {
+    void testInitializerWebConfigClasses() {
         WebAppInitializerWrapper webAppInitializerWrapper = new WebAppInitializerWrapper();
 
         assertThat(webAppInitializerWrapper.getServletConfigClasses(), arrayContaining(WebConfig.class));
     }
 
     @Test
-    public void testRootConfigClassIsMarkedAsConfiguration() {
+    void testRootConfigClassIsMarkedAsConfiguration() {
         Configuration configuration = RootConfig.class.getAnnotation(Configuration.class);
 
         assertThat(configuration, notNullValue());
     }
 
     @Test
-    public void testRootConfigClassEnablesComponentScan() {
+    void testRootConfigClassEnablesComponentScan() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan, notNullValue());
     }
 
     @Test
-    public void testRootConfigComponentScanPackages() {
+    void testRootConfigComponentScanPackages() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan.basePackages(), arrayContaining("com.bobocode"));
     }
 
     @Test
-    public void testRootConfigComponentScanFilters() {
+    void testRootConfigComponentScanFilters() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
         Filter[] filters = componentScan.excludeFilters();
         List<Class> filteredClasses = getFilteredClasses(filters);
@@ -88,42 +92,42 @@ public class WebAppConfigTest {
     }
 
     @Test
-    public void testWebConfigIsMarkedAsConfiguration() {
+    void testWebConfigIsMarkedAsConfiguration() {
         Configuration configuration = WebConfig.class.getAnnotation(Configuration.class);
 
         assertThat(configuration, notNullValue());
     }
 
     @Test
-    public void testWebConfigEnablesComponentScan() {
+    void testWebConfigEnablesComponentScan() {
         ComponentScan componentScan = WebConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan, notNullValue());
     }
 
     @Test
-    public void testWebConfigComponentScanPackages() {
+    void testWebConfigComponentScanPackages() {
         ComponentScan componentScan = WebConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan.value(), arrayContaining("com.bobocode.web"));
     }
 
     @Test
-    public void testWebConfigEnablesWebMvc() {
+    void testWebConfigEnablesWebMvc() {
         EnableWebMvc enableWebMvc = WebConfig.class.getAnnotation(EnableWebMvc.class);
 
         assertThat(enableWebMvc, notNullValue());
     }
 
     @Test
-    public void testDataGeneratorBeanName() {
+    void testDataGeneratorBeanName() {
         TestDataGenerator dataGenerator = applicationContext.getBean("dataGenerator", TestDataGenerator.class);
 
         assertThat(dataGenerator, notNullValue());
     }
 
     @Test
-    public void testDataGeneratorBeanNameIsNotSpecifiedExplicitly() {
+    void testDataGeneratorBeanNameIsNotSpecifiedExplicitly() {
         Method[] methods = RootConfig.class.getMethods();
         Method testDataGeneratorBeanMethod = findTestDataGeneratorBeanMethod(methods);
         Bean bean = testDataGeneratorBeanMethod.getDeclaredAnnotation(Bean.class);
