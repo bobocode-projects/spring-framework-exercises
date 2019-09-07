@@ -15,31 +15,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringJUnitWebConfig(classes = {RootConfig.class, WebConfig.class})
-public class WelcomeControllerTest {
+class WelcomeControllerTest {
     @Autowired
     private WebApplicationContext applicationContext;
 
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
     }
 
     @Test
-    public void testWelcomeUrl() throws Exception {
+    void testWelcomeUrl() throws Exception {
         mockMvc.perform(get("/welcome"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testRootUrl() throws Exception {
+    void testRootUrl() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testWelcomeViewName() throws Exception {
+    void testWelcomeViewName() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(view().name("welcome"));
     }

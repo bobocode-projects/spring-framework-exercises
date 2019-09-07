@@ -14,32 +14,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringJUnitWebConfig(classes = {RootConfig.class, WebConfig.class})
-public class AccountControllerTest {
+class AccountControllerTest {
     @Autowired
     private WebApplicationContext applicationContext;
 
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
     }
 
     @Test
-    public void testAccountControllerAnnotation() {
+    void testAccountControllerAnnotation() {
         Controller controller = AccountController.class.getAnnotation(Controller.class);
 
         assertThat(controller, notNullValue());
     }
 
     @Test
-    public void testAccountControllerRequestMapping() {
+    void testAccountControllerRequestMapping() {
         RequestMapping requestMapping = AccountController.class.getAnnotation(RequestMapping.class);
 
         assertThat(requestMapping, notNullValue());
@@ -48,30 +52,30 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testGetAccountsResponseStatusCode() throws Exception {
+    void testGetAccountsResponseStatusCode() throws Exception {
         mockMvc.perform(get("/accounts")).andExpect(status().isOk());
     }
 
     @Test
-    public void testGetAccountsViewName() throws Exception {
+    void testGetAccountsViewName() throws Exception {
         mockMvc.perform(get("/accounts"))
                 .andExpect(view().name("accounts"));
     }
 
     @Test
-    public void testGetAccountsModelContainsAccountList() throws Exception {
+    void testGetAccountsModelContainsAccountList() throws Exception {
         mockMvc.perform(get("/accounts"))
                 .andExpect(model().attributeExists("accountList"));
     }
 
     @Test
-    public void testAccountsResponseDefaultListSize() throws Exception {
+    void testAccountsResponseDefaultListSize() throws Exception {
         mockMvc.perform(get("/accounts"))
                 .andExpect(model().attribute("accountList", hasSize(10)));
     }
 
     @Test
-    public void testAccountsResponseListSize() throws Exception {
+    void testAccountsResponseListSize() throws Exception {
         mockMvc.perform(get("/accounts").param("size", "20"))
                 .andExpect(model().attribute("accountList", hasSize(20)));
     }

@@ -17,47 +17,51 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
-public class WelcomeWebAppTest {
+class WelcomeWebAppTest {
 
     @Test
-    public void testDispatcherServletMapping() {
+    void testDispatcherServletMapping() {
         WebAppInitializerWrapper webAppInitializerWrapper = new WebAppInitializerWrapper();
 
         assertThat(webAppInitializerWrapper.getServletMappings(), arrayContaining("/"));
     }
 
     @Test
-    public void testInitializerRootConfigClasses() {
+    void testInitializerRootConfigClasses() {
         WebAppInitializerWrapper webAppInitializerWrapper = new WebAppInitializerWrapper();
 
         assertThat(webAppInitializerWrapper.getRootConfigClasses(), arrayContaining(RootConfig.class));
     }
 
     @Test
-    public void testInitializerWebConfigClasses() {
+    void testInitializerWebConfigClasses() {
         WebAppInitializerWrapper webAppInitializerWrapper = new WebAppInitializerWrapper();
 
         assertThat(webAppInitializerWrapper.getServletConfigClasses(), arrayContaining(WebConfig.class));
     }
 
     @Test
-    public void testRootConfigClassIsMarkedAsConfiguration() {
+    void testRootConfigClassIsMarkedAsConfiguration() {
         Configuration configuration = RootConfig.class.getAnnotation(Configuration.class);
 
         assertThat(configuration, notNullValue());
     }
 
     @Test
-    public void testRootConfigClassEnablesComponentScan() {
+    void testRootConfigClassEnablesComponentScan() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan, notNullValue());
     }
 
     @Test
-    public void testRootConfigComponentScanPackages() {
+    void testRootConfigComponentScanPackages() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
         String[] packages = componentScan.basePackages();
         if (packages.length == 0) {
@@ -68,7 +72,7 @@ public class WelcomeWebAppTest {
     }
 
     @Test
-    public void testRootConfigComponentScanFilters() {
+    void testRootConfigComponentScanFilters() {
         ComponentScan componentScan = RootConfig.class.getAnnotation(ComponentScan.class);
         Filter[] filters = componentScan.excludeFilters();
         List<Class> filteredClasses = getFilteredClasses(filters);
@@ -84,49 +88,49 @@ public class WelcomeWebAppTest {
     }
 
     @Test
-    public void testWebConfigIsMarkedAsConfiguration() {
+    void testWebConfigIsMarkedAsConfiguration() {
         Configuration configuration = WebConfig.class.getAnnotation(Configuration.class);
 
         assertThat(configuration, notNullValue());
     }
 
     @Test
-    public void testWebConfigEnablesComponentScan() {
+    void testWebConfigEnablesComponentScan() {
         ComponentScan componentScan = WebConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan, notNullValue());
     }
 
     @Test
-    public void testWebConfigComponentScanPackages() {
+    void testWebConfigComponentScanPackages() {
         ComponentScan componentScan = WebConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan.basePackages(), arrayContaining("com.bobocode.web"));
     }
 
     @Test
-    public void testWebConfigEnablesWebMvc() {
+    void testWebConfigEnablesWebMvc() {
         EnableWebMvc enableWebMvc = WebConfig.class.getAnnotation(EnableWebMvc.class);
 
         assertThat(enableWebMvc, notNullValue());
     }
 
     @Test
-    public void testWelcomeControllerIsMarkedAsController() {
+    void testWelcomeControllerIsMarkedAsController() {
         Controller controller = WelcomeController.class.getAnnotation(Controller.class);
 
         assertThat(controller, notNullValue());
     }
 
     @Test
-    public void testWelcomeControllerMethodIsMarkedAsGetMethod() throws NoSuchMethodException {
+    void testWelcomeControllerMethodIsMarkedAsGetMethod() throws NoSuchMethodException {
         GetMapping getMapping = WelcomeController.class.getDeclaredMethod("welcome").getAnnotation(GetMapping.class);
 
         assertThat(getMapping, notNullValue());
     }
 
     @Test
-    public void testWelcomeControllerMethodMapping() throws NoSuchMethodException {
+    void testWelcomeControllerMethodMapping() throws NoSuchMethodException {
         GetMapping getMapping = WelcomeController.class.getDeclaredMethod("welcome").getAnnotation(GetMapping.class);
 
         assertThat(getMapping.value(), arrayContaining("/welcome"));

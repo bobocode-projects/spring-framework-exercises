@@ -21,11 +21,16 @@ import java.util.Comparator;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 
 @SpringJUnitConfig
-public class AppConfigTest {
+class AppConfigTest {
     @Configuration
     @ComponentScan(basePackages = "com.bobocode")
     static class TestConfig {
@@ -41,21 +46,21 @@ public class AppConfigTest {
     private AccountDao accountDao;
 
     @Test
-    public void testConfigClassIsMarkedAsConfiguration() {
+    void testConfigClassIsMarkedAsConfiguration() {
         Configuration configuration = AppConfig.class.getAnnotation(Configuration.class);
 
         assertThat(configuration, notNullValue());
     }
 
     @Test
-    public void testComponentScanIsEnabled() {
+    void testComponentScanIsEnabled() {
         ComponentScan componentScan = AppConfig.class.getAnnotation(ComponentScan.class);
 
         assertThat(componentScan, notNullValue());
     }
 
     @Test
-    public void testComponentScanPackagesAreSpecified() {
+    void testComponentScanPackagesAreSpecified() {
         ComponentScan componentScan = AppConfig.class.getAnnotation(ComponentScan.class);
         String[] packages = componentScan.basePackages();
         if (packages.length == 0) {
@@ -65,14 +70,14 @@ public class AppConfigTest {
     }
 
     @Test
-    public void testDataGeneratorHasOnlyOneBean() {
+    void testDataGeneratorHasOnlyOneBean() {
         Map<String, TestDataGenerator> testDataGeneratorMap = applicationContext.getBeansOfType(TestDataGenerator.class);
 
         assertThat(testDataGeneratorMap.size(), is(1));
     }
 
     @Test
-    public void testDataGeneratorBeanIsConfiguredExplicitly() {
+    void testDataGeneratorBeanIsConfiguredExplicitly() {
         Method[] methods = AppConfig.class.getMethods();
         Method testDataGeneratorBeanMethod = findTestDataGeneratorBeanMethod(methods);
 
@@ -81,14 +86,14 @@ public class AppConfigTest {
     }
 
     @Test
-    public void testDataGeneratorBeanName() {
+    void testDataGeneratorBeanName() {
         Map<String, TestDataGenerator> dataGeneratorBeanMap = applicationContext.getBeansOfType(TestDataGenerator.class);
 
         assertThat(dataGeneratorBeanMap.keySet(), hasItem("dataGenerator"));
     }
 
     @Test
-    public void testDataGeneratorBeanNameIsNotSpecifiedExplicitly() {
+    void testDataGeneratorBeanNameIsNotSpecifiedExplicitly() {
         Method[] methods = AppConfig.class.getMethods();
         Method testDataGeneratorBeanMethod = findTestDataGeneratorBeanMethod(methods);
         Bean bean = testDataGeneratorBeanMethod.getDeclaredAnnotation(Bean.class);
@@ -108,70 +113,70 @@ public class AppConfigTest {
     }
 
     @Test
-    public void testFakeAccountDaoIsConfiguredAsComponent() {
+    void testFakeAccountDaoIsConfiguredAsComponent() {
         Component component = FakeAccountDao.class.getAnnotation(Component.class);
 
         assertThat(component, notNullValue());
     }
 
     @Test
-    public void testAccountDaoHasOnlyOneBean() {
+    void testAccountDaoHasOnlyOneBean() {
         Map<String, AccountDao> accountDaoBeanMap = applicationContext.getBeansOfType(AccountDao.class);
 
         assertThat(accountDaoBeanMap.size(), is(1));
     }
 
     @Test
-    public void testAccountDaoBeanName() {
+    void testAccountDaoBeanName() {
         Map<String, AccountDao> accountDaoBeanMap = applicationContext.getBeansOfType(AccountDao.class);
 
         assertThat(accountDaoBeanMap.keySet(), hasItem("accountDao"));
     }
 
     @Test
-    public void testAccountDaoConstructorIsMarkedWithAutowired() throws NoSuchMethodException {
+    void testAccountDaoConstructorIsMarkedWithAutowired() throws NoSuchMethodException {
         Autowired autowired = FakeAccountDao.class.getConstructor(TestDataGenerator.class).getAnnotation(Autowired.class);
 
         assertThat(autowired, notNullValue());
     }
 
     @Test
-    public void testAccountServiceHasOnlyOneBean() {
+    void testAccountServiceHasOnlyOneBean() {
         Map<String, AccountService> accountServiceMap = applicationContext.getBeansOfType(AccountService.class);
 
         assertThat(accountServiceMap.size(), is(1));
     }
 
     @Test
-    public void testAccountServiceIsConfiguredAsService() {
+    void testAccountServiceIsConfiguredAsService() {
         Service service = AccountService.class.getAnnotation(Service.class);
 
         assertThat(service, notNullValue());
     }
 
     @Test
-    public void testAccountServiceBeanName() {
+    void testAccountServiceBeanName() {
         Map<String, AccountService> accountServiceMap = applicationContext.getBeansOfType(AccountService.class);
 
         assertThat(accountServiceMap.keySet(), hasItem("accountService"));
     }
 
     @Test
-    public void testAccountServiceBeanNameIsNotSpecifiedExplicitly() {
+    void testAccountServiceBeanNameIsNotSpecifiedExplicitly() {
         Service service = AccountService.class.getAnnotation(Service.class);
 
         assertThat(service.value(), equalTo(""));
     }
 
     @Test
-    public void testAccountServiceDoesNotUseAutowired() throws NoSuchMethodException {
+    void testAccountServiceDoesNotUseAutowired() throws NoSuchMethodException {
         Annotation[] annotations = AccountService.class.getConstructor(AccountDao.class).getDeclaredAnnotations();
 
         assertThat(annotations, arrayWithSize(0));
     }
 
     @Test
-    public void testFindRichestAccount() {
+    void testFindRichestAccount() {
         Account richestAccount = accountService.findRichestAccount();
 
         Account actualRichestAccount = accountDao.findAll().stream().max(Comparator.comparing(Account::getBalance)).get();
