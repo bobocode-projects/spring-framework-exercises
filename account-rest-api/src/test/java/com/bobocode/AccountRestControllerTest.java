@@ -17,14 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitWebConfig(classes = {RootConfig.class, WebConfig.class})
-public class AccountRestControllerTest {
+class AccountRestControllerTest {
     @Autowired
     private WebApplicationContext applicationContext;
 
@@ -34,20 +39,20 @@ public class AccountRestControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
         accountDao.clear();
     }
 
     @Test
-    public void testAccountRestControllerAnnotation() {
+    void testAccountRestControllerAnnotation() {
         RestController restController = AccountRestController.class.getAnnotation(RestController.class);
 
         assertThat(restController, notNullValue());
     }
 
     @Test
-    public void testAccountRestControllerRequestMapping() {
+    void testAccountRestControllerRequestMapping() {
         RequestMapping requestMapping = AccountRestController.class.getAnnotation(RequestMapping.class);
 
         assertThat(requestMapping, notNullValue());
@@ -56,7 +61,7 @@ public class AccountRestControllerTest {
     }
 
     @Test
-    public void testHttpStatusCodeOnCreate() throws Exception {
+    void testHttpStatusCodeOnCreate() throws Exception {
         mockMvc.perform(
                 post("/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -65,7 +70,7 @@ public class AccountRestControllerTest {
     }
 
     @Test
-    public void testCreateAccountReturnsAssignedId() throws Exception {
+    void testCreateAccountReturnsAssignedId() throws Exception {
         mockMvc.perform(
                 post("/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -74,13 +79,13 @@ public class AccountRestControllerTest {
     }
 
     @Test
-    public void testGetAccountsResponseStatusCode() throws Exception {
+    void testGetAccountsResponseStatusCode() throws Exception {
         mockMvc.perform(get("/accounts").accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetAllAccounts() throws Exception {
+    void testGetAllAccounts() throws Exception {
         Account account1 = create("Johnny", "Boy", "jboy@gmail.com");
         Account account2 = create("Okko", "Bay", "obay@gmail.com");
         accountDao.save(account1);
@@ -91,7 +96,7 @@ public class AccountRestControllerTest {
                 .andExpect(jsonPath("$.[*].email").value(hasItems("jboy@gmail.com", "obay@gmail.com")));
     }
 
-    private Account create(String firstName, String lastName, String email){
+    private Account create(String firstName, String lastName, String email) {
         Account account = new Account();
         account.setFirstName(firstName);
         account.setLastName(lastName);
@@ -100,7 +105,7 @@ public class AccountRestControllerTest {
     }
 
     @Test
-    public void testGetById() throws Exception {
+    void testGetById() throws Exception {
         Account account = create("Johnny", "Boy", "jboy@gmail.com");
         accountDao.save(account);
 
@@ -113,7 +118,7 @@ public class AccountRestControllerTest {
     }
 
     @Test
-    public void testRemoveAccount() throws Exception {
+    void testRemoveAccount() throws Exception {
         Account account = create("Johnny", "Boy", "jboy@gmail.com");
         accountDao.save(account);
 
@@ -122,7 +127,7 @@ public class AccountRestControllerTest {
     }
 
     @Test
-    public void testUpdateAccount() throws Exception {
+    void testUpdateAccount() throws Exception {
         Account account = create("Johnny", "Boy", "jboy@gmail.com");
         accountDao.save(account);
 

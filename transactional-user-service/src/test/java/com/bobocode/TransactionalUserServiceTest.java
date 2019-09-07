@@ -24,17 +24,20 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @SpringJUnitConfig(RootConfig.class)
 @Transactional
-public class TransactionalUserServiceTest {
+class TransactionalUserServiceTest {
     @Configuration
     static class TestConfig {
         @Bean
-        public TestDataGenerator dataGenerator() {
+        TestDataGenerator dataGenerator() {
             return new TestDataGenerator();
         }
     }
@@ -49,70 +52,70 @@ public class TransactionalUserServiceTest {
     private TestDataGenerator dataGenerator;
 
     @Test
-    public void testTxManagerBeanName() {
+    void testTxManagerBeanName() {
         PlatformTransactionManager transactionManager = applicationContext.getBean(PlatformTransactionManager.class, "transactionManager");
 
         assertThat(transactionManager, notNullValue());
     }
 
     @Test
-    public void testUserDaoBeanName() {
+    void testUserDaoBeanName() {
         UserDao userDao = applicationContext.getBean(UserDao.class, "userDao");
 
         assertThat(userDao, notNullValue());
     }
 
     @Test
-    public void testEntityManagerFactoryBeanName() {
+    void testEntityManagerFactoryBeanName() {
         EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class, "entityManagerFactory");
 
         assertThat(entityManagerFactory, notNullValue());
     }
 
     @Test
-    public void testUserServiceIsMarkedAsService() {
+    void testUserServiceIsMarkedAsService() {
         Service service = UserService.class.getAnnotation(Service.class);
 
         assertThat(service, notNullValue());
     }
 
     @Test
-    public void testUserDaoIsMarkedAsRepository() {
+    void testUserDaoIsMarkedAsRepository() {
         Repository repository = JpaUserDao.class.getAnnotation(Repository.class);
 
         assertThat(repository, notNullValue());
     }
 
     @Test
-    public void testUserServiceIsTransactional() {
+    void testUserServiceIsTransactional() {
         Transactional transactional = UserService.class.getAnnotation(Transactional.class);
 
         assertThat(transactional, notNullValue());
     }
 
     @Test
-    public void testUserServiceGetAllIsReadOnly() throws NoSuchMethodException {
+    void testUserServiceGetAllIsReadOnly() throws NoSuchMethodException {
         Transactional transactional = UserService.class.getDeclaredMethod("getAll").getAnnotation(Transactional.class);
 
         assertThat(transactional.readOnly(), is(true));
     }
 
     @Test
-    public void testUserServiceGetAllAdminsIsReadOnly() throws NoSuchMethodException {
+    void testUserServiceGetAllAdminsIsReadOnly() throws NoSuchMethodException {
         Transactional transactional = UserService.class.getDeclaredMethod("getAllAdmins").getAnnotation(Transactional.class);
 
         assertThat(transactional.readOnly(), is(true));
     }
 
     @Test
-    public void testUserDaoIsTransactional() {
+    void testUserDaoIsTransactional() {
         Transactional transactional = JpaUserDao.class.getAnnotation(Transactional.class);
 
         assertThat(transactional, notNullValue());
     }
 
     @Test
-    public void testSaveUser() {
+    void testSaveUser() {
         User user = dataGenerator.generateUser();
         userService.save(user);
 
@@ -120,7 +123,7 @@ public class TransactionalUserServiceTest {
     }
 
     @Test
-    public void testGetAllUsers() {
+    void testGetAllUsers() {
         List<User> userList = generateUserList(10);
         userList.forEach(userService::save);
 
@@ -135,7 +138,7 @@ public class TransactionalUserServiceTest {
     }
 
     @Test
-    public void testGetAllAdmins() {
+    void testGetAllAdmins() {
         List<User> userList = generateUserList(20);
         userList.forEach(userService::save);
 
@@ -154,7 +157,7 @@ public class TransactionalUserServiceTest {
     }
 
     @Test
-    public void testAddNewRole() {
+    void testAddNewRole() {
         User user = dataGenerator.generateUser(RoleType.USER);
         userService.save(user);
 
