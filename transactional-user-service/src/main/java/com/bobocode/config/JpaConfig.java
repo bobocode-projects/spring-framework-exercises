@@ -1,5 +1,7 @@
 package com.bobocode.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -20,13 +22,16 @@ import javax.sql.DataSource;
  * todo: 4. Configure bean {@link javax.persistence.EntityManagerFactory} with name "entityManagerFactory"
  *
  */
+@Configuration
 public class JpaConfig {
+    @Bean
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .build();
     }
 
+    @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setDatabase(Database.H2);
@@ -35,11 +40,12 @@ public class JpaConfig {
         return adapter;
     }
 
+    @Bean("entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean localContainerEMF(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setJpaVendorAdapter(jpaVendorAdapter);
-        // todo: 5. Configure package "com.bobocode.model" to scan for JPA entities
+        emf.setPackagesToScan("com.bobocode.model");
         return emf;
     }
 }
