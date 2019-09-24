@@ -17,5 +17,6 @@ You're supposed to be familiar with *Spring IoC* and *Dependency injection* and 
 * Don't worry if you got stuck, checkout the **exercise/completed** branch and see the final implementation
  
 ### Related materials :information_source:
+ * [Spring @Configuration vs @Component](https://youtu.be/KWvTgqtA_HA) <img src="https://raw.githubusercontent.com/bobocode-projects/resources/master/image/yt_icon_rgb.png" height=13/>
  * [Injecting Inter-bean Dependencies](https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/core.html#beans-java-injecting-dependencies) <img src="https://spring.io/img/homepage/icon-spring-framework.svg" height=15/>
 
