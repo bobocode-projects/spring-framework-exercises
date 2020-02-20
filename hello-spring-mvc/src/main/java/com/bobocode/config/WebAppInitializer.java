@@ -12,16 +12,16 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        throw new UnsupportedOperationException("Method is not implemented yet!");
+        return new Class[]{RootConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        throw new UnsupportedOperationException("Method is not implemented yet!");
+        return new Class[]{WebConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        throw new UnsupportedOperationException("Method is not implemented yet!");
+        return new String[]{"/"};
     }
 }
