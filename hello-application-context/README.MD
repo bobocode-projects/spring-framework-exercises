@@ -17,5 +17,5 @@ You're supposed to be familiar with *Spring IoC* and *Dependency injection*
 * Don't worry if you got stuck, checkout the **exercise/completed** branch and see the final implementation
  
 ### Related materials :information_source:
- * [Spring IoC basics tutorial](https://github.com/boy4uck/spring-framework-tutorial/tree/master/spring-framework-ioc-basics)<img src="https://raw.githubusercontent.com/bobocode-projects/resources/master/image/logo_transparent_background.png" height=20/>
+ * [Spring IoC basics tutorial](https://github.com/bobocode-projects/spring-framework-tutorial/tree/master/ioc-basics)<img src="https://raw.githubusercontent.com/bobocode-projects/resources/master/image/logo_transparent_background.png" height=20/>
 
